@@ -17,11 +17,10 @@
 // 3. Вывести все числа от 1 до 100, которые кратные указанному
 // пользователем числу
 
-let counter = Number(prompt('Enter a num'));
-let res = '';
+const finnish = Number(prompt('Enter a num'));
+let beginnish = -1;
 
-while (counter-- > 0) {
-    res += '#';
+while (finnish >= ++beginnish){
+    console.log(beginnish);
 }
 
-console.log(res);
