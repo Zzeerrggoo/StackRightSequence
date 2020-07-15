@@ -1,34 +1,150 @@
-// Для вывода данных используйте alert() или document.
-// write() . Для ввода данных используйте prompt() и confirm() .
-//  ■■ Задания, в которых необходимо использовать WHILE.
-// 1. Вывести # столько раз, сколько указал пользователь.
-// 2. Пользователь ввел число, а на экран вывелись все числа
-// от введенного до 0.
-// 3. Запросить число и степень. Возвести число в указанную
-// степень и вывести результат.
-// 4. Запросить 2 числа и найти все общие делители.
-// 5. Посчитать факториал введенного пользователем числа.
-//  ■■ Задания, в которых необходимо использовать DO WHILE.
-// 1. Предлагать пользователю решить пример 2 + 2 * 2 до тех
-// пор, пока он не решит его правильно.
-// 2. Делить число 1000 на 2 до тех пор, пока не получится число
-// меньше 50. Вывести это число и сколько делений произвели.
-//  ■■ Задания, в которых необходимо использовать FOR.
-// 3. Вывести все числа от 1 до 100, которые кратные указанному
-// пользователем числу
+'use strict';
 
-const num = Number(prompt('Enter a number'));
-let counter = Number(prompt('Enter a counter'));
-let res = 1;
+class Stack {
 
-if (!isNaN(counter) && !isNaN(num)) {
-    while (0 < counter--) {
-        console.log(num);
-        res *= num;
+    constructor(maxSize = 10000) {
+        if (typeof maxSize !== 'number') {
+            throw new TypeError();
+        }
+        if (isNaN(maxSize) || maxSize < 0 || !Number.isInteger(maxSize)) {
+            throw new RangeError();
+        }
+
+        this._size = 0;
+        this._maxSize = maxSize;
     }
+
+    get isEmpty() {
+        return this._size === 0;
+    }
+
+    get size() {
+        return this._size;
+    }
+
+    push(value) {
+        if (this._size >= this._maxSize) {
+            throw new RangeError('Stack overflow');
+        }
+        this[`_${this._size++}`] = value;
+
+        return this._size;
+    }
+
+    pop() {
+        if (this.isEmpty) {
+            return;
+        }
+        const lastItem = this[`_${--this._size}`];
+        delete this[`_${this._size}`];
+        return lastItem;
+
+    }
+
+    pick() {
+        if (this.isEmpty) {
+            return;
+        }
+        return this[`_${this._size - 1}`];
+    }
+
 }
 
-alert(res);
+const str = prompt();
+
+alert(isRightSequence(str));
+
+function isRightSequence(arr) {
+
+    let counter = new Stack(arr.length);
+    let temp = '';
+
+
+    for (let item of arr) {
+
+        if (item === '(' || item === '{' || item === '[') {
+            counter.push(item);
+        } else {
+
+            temp = counter.pick();
+
+            if (temp === '(' && item === ')' ||
+                temp === '[' && item === ']' ||
+                temp === '{' && item === '}') {
+
+                counter.pop();
+            } else {
+                return false;
+            }
+        }
+    }
+
+    return counter.isEmpty;
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
